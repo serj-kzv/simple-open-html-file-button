@@ -7,6 +7,7 @@ body,
     padding: 0;
     display: block;
     scrollbar-width: none;
+    background-color: black;
 }
 
 input[type="file"] {
@@ -35,6 +36,5 @@ input[type="file"] {
     flex-basis: auto;
     align-self: auto;
     order: 0;
-    background-color: black;
     white-space: nowrap;
 }
