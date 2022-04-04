@@ -38,7 +38,3 @@ input[type="file"] {
     background-color: black;
     white-space: nowrap;
 }
-
-.flex-items:not(:last-child) {
-    border-bottom: 5px solid white;
-}
