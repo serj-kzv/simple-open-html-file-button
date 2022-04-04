@@ -22,9 +22,5 @@
   },
   "web_accessible_resources": [
     "src/open-file.html"
-  ],
-  "permissions": [
-    "<all_urls>",
-    "tabs"
   ]
 }
