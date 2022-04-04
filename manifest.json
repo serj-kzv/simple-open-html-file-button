@@ -1,0 +1,30 @@
+{
+  "manifest_version": 2,
+  "name": "simple-open-html-file-button",
+  "version": "0.1",
+  "description": "Simple button to open html file.",
+  "author": "serj-kzv",
+  "homepage_url": "https://github.com/serj-kzv/simple-open-html-file-button",
+  "background": {
+    "scripts": [
+      "src/background.js"
+    ]
+  },
+  "browser_action": {
+    "default_icon": "icon.png"
+  },
+  "icons": {
+    "16": "icon.png",
+    "32": "icon.png",
+    "48": "icon.png",
+    "64": "icon.png",
+    "96": "icon.png"
+  },
+  "web_accessible_resources": [
+    "src/open-file.html"
+  ],
+  "permissions": [
+    "<all_urls>",
+    "tabs"
+  ]
+}

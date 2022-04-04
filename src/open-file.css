@@ -1,0 +1,44 @@
+html,
+body,
+.flex-container,
+.file-label {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: block;
+    scrollbar-width: none;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.file-label {
+    cursor: pointer;
+    color: white;
+    font-size: 17.46vh;
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: stretch;
+    align-content: stretch;
+}
+
+.flex-items {
+    flex-grow: 1;
+    display: block;
+    flex-shrink: 1;
+    flex-basis: auto;
+    align-self: auto;
+    order: 0;
+    background-color: black;
+    white-space: nowrap;
+}
+
+.flex-items:not(:last-child) {
+    border-bottom: 5px solid white;
+}
