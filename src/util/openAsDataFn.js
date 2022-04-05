@@ -1,4 +1,6 @@
-const openAsDataFn = async (content, type, isNewTab, filename) => {
+const openAsDataFn = async (content, type, charset, isNewTab, filename) => {
+    type = charset ? `${type};charset=${charset}` : type;
+
     let
         isCompleted = false,
         isMemoryCleared = false,
@@ -7,7 +9,7 @@ const openAsDataFn = async (content, type, isNewTab, filename) => {
         onReplacedListener = null,
         onUpdatedListener = null;
     const
-        url = window.URL.createObjectURL(new Blob([content], {type})),
+        url = window.URL.createObjectURL(new Blob([content], {type, encoding: charset})),
         clearMemory = () => {
             if (!isMemoryCleared) {
                 isMemoryCleared = true;
