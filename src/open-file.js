@@ -5,10 +5,14 @@ import readFileAsTxtFn from "./util/readFileAsTxtFn.js";
 document.getElementById('open-in-new-tab')
     .addEventListener('change', async ({target: {files}}) => {
         Promise.allSettled(Array.from(files).map(async file => {
-            let content = await readFileAsBinaryStringFn(file);
+            var start = new Date().getTime();
+            let content;
+            // content = await readFileAsBinaryStringFn(file);
+            content = await readFileAsBinaryStringFn(file.slice(0, 1025));
             const encoding = jschardet.detect(content).encoding;
 
             content = await readFileAsTxtFn(file, encoding);
-            openAsHtmlFn(content, 'UTF-8');
+            await openAsHtmlFn(content, 'UTF-8');
+            console.log(new Date().getTime() - start);
         }));
     });
