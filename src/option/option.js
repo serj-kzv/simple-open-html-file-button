@@ -1,28 +1,17 @@
+import getOrDefaultFn from "../lib-ext/getOrDefaultFn.js";
+
 const NAMES = {
-    quantityOfBytesToDetectEncoding: 'quantityOfBytesToDetectEncoding'
+    quantityOfBytesToDetectEncoding: 'quantityOfBytesToDetectEncoding',
+    detectEncodingEnabled: 'detectEncodingEnabled'
 };
 const CONTEXT = {
-    bytes: document.getElementById(NAMES.quantityOfBytesToDetectEncoding)
+    bytes: document.getElementById(NAMES.quantityOfBytesToDetectEncoding),
+    detectEncodingEnabled: document.getElementById(NAMES.detectEncodingEnabled)
 };
 let config;
-const getOrDefaultFn = async () => {
-    let config;
-
-    try {
-        config = await browser.storage.local.get();
-
-        if (config === undefined || Object.keys(config).length === 0) {
-            throw new Error('config is undefined');
-        }
-    } catch (e) {
-        config = await (await fetch(browser.runtime.getURL('/src/assets/config.json'))).json();
-        await browser.storage.local.set(config);
-    }
-
-    return config;
-};
 const initFn = () => {
     CONTEXT.bytes.value = Number(config[NAMES.quantityOfBytesToDetectEncoding]);
+    CONTEXT.detectEncodingEnabled.checked = Boolean(config[NAMES.detectEncodingEnabled]);
 };
 const mainFn = async () => {
     config = await getOrDefaultFn();
@@ -34,6 +23,7 @@ const mainFn = async () => {
     });
     document.getElementById('save').addEventListener('click', () => {
         config[NAMES.quantityOfBytesToDetectEncoding] = Number(CONTEXT.bytes.value);
+        config[NAMES.detectEncodingEnabled] = Boolean(CONTEXT.detectEncodingEnabled.checked);
         browser.storage.local.set(config);
     });
 };

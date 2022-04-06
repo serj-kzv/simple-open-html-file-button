@@ -1,3 +1,4 @@
 {
-  "quantityOfBytesToDetectEncoding": 2048
+  "detectEncodingEnabled" : true,
+  "quantityOfBytesToDetectEncoding": 16384
 }

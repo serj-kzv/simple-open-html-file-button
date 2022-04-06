@@ -1,4 +1,4 @@
-const openAsDataFn = async (content, type, charset, isNewTab, filename) => {
+const openAsDataFn = async (content, type, charset, active, isNewTab, filename) => {
     let options;
 
     if (charset) {
@@ -65,11 +65,11 @@ const openAsDataFn = async (content, type, charset, isNewTab, filename) => {
 
     try {
         if (isNewTab) {
-            return currentTab = await browser.tabs.create({url});
+            return currentTab = await browser.tabs.create({url, active});
         } else {
             const {id: tabId} = await browser.tabs.getCurrent();
 
-            return currentTab = await browser.tabs.update(tabId, {url});
+            return currentTab = await browser.tabs.update(tabId, {url, active});
         }
     } catch (e) {
         // clear memory on a tab open event error
