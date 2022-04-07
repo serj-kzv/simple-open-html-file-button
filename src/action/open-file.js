@@ -6,11 +6,8 @@ import CONSTANTS from "../common/CONSTANTS.js";
 
 const openHtmlWithoutEncodingDetectionFn = async file => openAsHtmlFn(await readFileAsTxtFn(file));
 const openHtmlWithEncodingDetectionFn = async (file, config) => {
-    const quantityOfBytesToDetectEncoding = config[CONSTANTS.quantityOfBytesToDetectEncoding] + 1;
-    const fileSize = file.size + 1;
-    const quantityOfBytesToDetectEncodingResult = quantityOfBytesToDetectEncoding > fileSize ? fileSize : quantityOfBytesToDetectEncoding;
-
-    let content = file.slice(0, quantityOfBytesToDetectEncodingResult);
+    const quantityOfBytesToDetectEncoding = config[CONSTANTS.quantityOfBytesToDetectEncoding];
+    let content = quantityOfBytesToDetectEncoding < file.size ? file.slice(0, quantityOfBytesToDetectEncoding + 1) : file;
 
     content = await readFileAsBinaryStringFn(content);
 
