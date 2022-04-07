@@ -1,4 +1,7 @@
 {
   "detectEncodingEnabled" : true,
-  "quantityOfBytesToDetectEncoding": 16384
+  "quantityOfBytesToDetectEncoding": 2097152,
+  "changelog": {
+    "migration1Fn": true
+  }
 }
