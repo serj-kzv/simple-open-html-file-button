@@ -10,7 +10,10 @@ const openHtmlWithEncodingDetectionFn = async (file, config) => {
     const fileSize = file.size + 1;
     const quantityOfBytesToDetectEncodingResult = quantityOfBytesToDetectEncoding > fileSize ? fileSize : quantityOfBytesToDetectEncoding;
 
-    let content = await readFileAsBinaryStringFn(file.slice(0, quantityOfBytesToDetectEncodingResult));
+    let content = file.slice(0, quantityOfBytesToDetectEncodingResult);
+
+    content = await readFileAsBinaryStringFn(content);
+
     const encoding = jschardet.detect(content).encoding;
 
     content = await readFileAsTxtFn(file, encoding);
