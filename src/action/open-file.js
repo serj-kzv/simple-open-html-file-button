@@ -10,7 +10,7 @@ const openHtmlWithoutEncodingDetectionFn = async (
     clearMemoryOnRemoved,
     clearMemoryOnReplaced,
     clearMemoryOnUpdated) => {
-    return openAsHtmlFn(
+    return await openAsHtmlFn(
         await readFileAsTxtFn(file),
         'UTF-8',
         false,
@@ -35,7 +35,7 @@ const openHtmlWithEncodingDetectionFn = async (
 
     content = await readFileAsTxtFn(file, encoding);
 
-    return openAsHtmlFn(
+    return await openAsHtmlFn(
         content,
         'UTF-8',
         false,
@@ -54,7 +54,7 @@ document.getElementById('open-in-new-tab')
         const clearMemoryOnReplaced = Boolean(config[CONSTANTS.clearMemoryOnReplaced]);
         const clearMemoryOnUpdated = Boolean(config[CONSTANTS.clearMemoryOnUpdated]);
         const openHtmlFn = detectEncodingEnabled ? openHtmlWithEncodingDetectionFn : openHtmlWithoutEncodingDetectionFn;
-        const openHtmlPromises = Array.from(files).map(async file => openHtmlFn(
+        const openHtmlPromises = Array.from(files).map(file => openHtmlFn(
             file,
             config,
             clearMemoryOnRemoved,
@@ -67,12 +67,6 @@ document.getElementById('open-in-new-tab')
                 await openHtmlPromise;
             }
         } else {
-            Promise.allSettled(Array.from(files).map(async file => openHtmlFn(
-                file,
-                config,
-                clearMemoryOnRemoved,
-                clearMemoryOnReplaced,
-                clearMemoryOnUpdated
-            )));
+            Promise.allSettled(openHtmlPromises);
         }
     });

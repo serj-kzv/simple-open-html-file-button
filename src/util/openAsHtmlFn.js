@@ -1,6 +1,6 @@
 import openAsDataFn from "./openAsDataFn.js";
 
-const openAsHtmlFn = async (
+const openAsHtmlFn = (
     content,
     charset,
     active = false,
@@ -8,7 +8,7 @@ const openAsHtmlFn = async (
     clearMemoryOnRemoved = true,
     clearMemoryOnReplaced = true,
     clearMemoryOnUpdated = true) => {
-    return await openAsDataFn(
+    return openAsDataFn(
         content,
         {type: 'text/html', charset},
         {

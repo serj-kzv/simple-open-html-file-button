@@ -7,6 +7,7 @@
   "sequentialOpening": true,
   "changelog": {
     "migration1Fn": true,
-    "migration2Fn": true
+    "migration2Fn": true,
+    "migration3Fn": true
   }
 }
