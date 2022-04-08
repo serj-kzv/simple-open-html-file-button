@@ -32,8 +32,10 @@ const mainFn = async () => {
     document.getElementById('save').addEventListener('click', async () => {
         if (isTextConfigChanged) {
             try {
+                const newConfig = JSON.parse(CONTEXT.config.value);
+
                 await browser.storage.local.clear();
-                await browser.storage.local.set(JSON.parse(CONTEXT.config.value));
+                await browser.storage.local.set(newConfig);
             } catch (e) {
 
             }
