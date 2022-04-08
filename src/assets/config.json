@@ -3,11 +3,12 @@
   "quantityOfBytesToDetectEncoding": 2097152,
   "clearMemoryOnRemoved": true,
   "clearMemoryOnReplaced": true,
-  "clearMemoryOnUpdated": false,
-  "sequentialOpening": true,
+  "clearMemoryOnUpdated": true,
+  "sequentialOpening": false,
   "changelog": {
     "migration1Fn": true,
     "migration2Fn": true,
-    "migration3Fn": true
+    "migration3Fn": true,
+    "migration4Fn": true
   }
 }
