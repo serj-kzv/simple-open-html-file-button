@@ -1,4 +1,8 @@
-const openAsDataFn = async (content, type, charset, active, isNewTab, filename) => {
+// const openAsDataFn = async (content, type, charset, active, isNewTab, filename) => {
+const openAsDataFn = async (
+    content,
+    {type, charset},
+    {active, isNewTab, clearMemoryOnRemoved, clearMemoryOnReplaced, clearMemoryOnUpdated}) => {
     let options;
 
     if (charset) {
@@ -59,9 +63,15 @@ const openAsDataFn = async (content, type, charset, active, isNewTab, filename) 
         }
     };
 
-    browser.tabs.onRemoved.addListener(onRemovedListener);
-    browser.tabs.onReplaced.addListener(onReplacedListener);
-    browser.tabs.onUpdated.addListener(onUpdatedListener);
+    if (clearMemoryOnRemoved) {
+        browser.tabs.onRemoved.addListener(onRemovedListener);
+    }
+    if (clearMemoryOnReplaced) {
+        browser.tabs.onReplaced.addListener(onReplacedListener);
+    }
+    if (clearMemoryOnUpdated) {
+        browser.tabs.onUpdated.addListener(onUpdatedListener);
+    }
 
     try {
         if (isNewTab) {

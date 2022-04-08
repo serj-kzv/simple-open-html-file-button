@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Open HTML option</title>
     <script src="option.js" type="module"></script>
+    <link rel="stylesheet" href="option.css">
 </head>
 <body>
 <div>
@@ -13,7 +14,9 @@
     <button id="save">Save</button>
 </div>
 <div>
-    <label><input id="detectEncodingEnabled" type=checkbox checked> Detect Encoding Enabled</label>
+    <label><input id="detectEncodingEnabled" type=checkbox checked>
+        Detect Encoding Enabled
+    </label>
 </div>
 <div>
     <label for="quantityOfBytesToDetectEncoding">
@@ -22,7 +25,27 @@
     </label>
 </div>
 <div>
-    <textarea id="config" cols="30" rows="10"></textarea>
+    <label><input id="clearMemoryOnRemoved" type=checkbox checked>
+        Clear tab memory on the tab removed
+    </label>
+</div>
+<div>
+    <label><input id="clearMemoryOnReplaced" type=checkbox checked>
+        Clear tab memory on the tab replaced
+    </label>
+</div>
+<div>
+    <label><input id="clearMemoryOnUpdated" type=checkbox checked>
+        Clear tab memory on the tab updated (Recommended is FALSE due to Firefox <a href="https://github.com/mozilla-mobile/fenix/issues/12731">bug 12731</a>)
+    </label>
+</div>
+<div>
+    <label><input id="sequentialOpening" type=checkbox checked>
+        Sequential tab opening and encoding detection
+    </label>
+</div>
+<div>
+    <textarea id="config" cols="30" rows="10" spellcheck="false"></textarea>
 </div>
 </body>
 </html>

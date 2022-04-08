@@ -1,8 +1,8 @@
 import getOrDefaultFn from "../../ext-lib/getOrDefaultFn.js";
 import CONSTANTS from "../../common/CONSTANTS.js";
 
-const MIGRATION_SCRIPT_NAME = 'migration1Fn';
-const migration1Fn = async () => {
+const MIGRATION_SCRIPT_NAME = 'migration2Fn';
+const migration2Fn = async () => {
     const config = await getOrDefaultFn();
 
     if (config[CONSTANTS.changelog] === undefined
@@ -13,11 +13,13 @@ const migration1Fn = async () => {
         }
         config[CONSTANTS.changelog][MIGRATION_SCRIPT_NAME] = true;
 
-        config[CONSTANTS.quantityOfBytesToDetectEncoding] = 2097152;
-        config[CONSTANTS.detectEncodingEnabled] = true;
+        config[CONSTANTS.clearMemoryOnRemoved] = true;
+        config[CONSTANTS.clearMemoryOnReplaced] = true;
+        config[CONSTANTS.clearMemoryOnUpdated] = false;
+        config[CONSTANTS.sequentialOpening] = true;
 
         browser.storage.local.set(config);
     }
 };
 
-export default migration1Fn;
+export default migration2Fn;

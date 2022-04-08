@@ -14,7 +14,7 @@ const openHtmlWithEncodingDetectionFn = async (file, config) => {
     const encoding = jschardet.detect(content).encoding;
 
     content = await readFileAsTxtFn(file, encoding);
-    await openAsHtmlFn(content, 'UTF-8');
+    await openAsHtmlFn(content, 'UTF-8', false, true);
 };
 
 document.getElementById('open-in-new-tab')
@@ -22,6 +22,13 @@ document.getElementById('open-in-new-tab')
         const config = await getOrDefaultFn();
         const detectEncodingEnabled = Boolean(config[CONSTANTS.detectEncodingEnabled]);
         const openHtmlFn = detectEncodingEnabled ? openHtmlWithEncodingDetectionFn : openHtmlWithoutEncodingDetectionFn;
+        const openHtmlPromises = Array.from(files).map(async file => openHtmlFn(file, config));
 
-        Promise.allSettled(Array.from(files).map(async file => openHtmlFn(file, config)));
+        if (config[CONSTANTS.sequentialOpening]) {
+            for (const openHtmlPromise of openHtmlPromises) {
+                await openHtmlPromise;
+            }
+        } else {
+            Promise.allSettled(Array.from(files).map(async file => openHtmlFn(file, config)));
+        }
     });
