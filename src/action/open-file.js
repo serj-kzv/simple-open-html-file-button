@@ -54,7 +54,13 @@ document.getElementById('open-in-new-tab')
         const clearMemoryOnReplaced = Boolean(config[CONSTANTS.clearMemoryOnReplaced]);
         const clearMemoryOnUpdated = Boolean(config[CONSTANTS.clearMemoryOnUpdated]);
         const openHtmlFn = detectEncodingEnabled ? openHtmlWithEncodingDetectionFn : openHtmlWithoutEncodingDetectionFn;
-        const openHtmlPromises = Array.from(files).map(async file => openHtmlFn(file, config));
+        const openHtmlPromises = Array.from(files).map(async file => openHtmlFn(
+            file,
+            config,
+            clearMemoryOnRemoved,
+            clearMemoryOnReplaced,
+            clearMemoryOnUpdated
+        ));
 
         if (config[CONSTANTS.sequentialOpening]) {
             for (const openHtmlPromise of openHtmlPromises) {
