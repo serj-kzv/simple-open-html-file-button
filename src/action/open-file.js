@@ -64,7 +64,11 @@ document.getElementById('open-in-new-tab')
 
         if (config[CONSTANTS.sequentialOpening]) {
             for (const openHtmlPromise of openHtmlPromises) {
-                await openHtmlPromise;
+                try {
+                    await openHtmlPromise;
+                } catch (e) {
+
+                }
             }
         } else {
             Promise.allSettled(openHtmlPromises);
