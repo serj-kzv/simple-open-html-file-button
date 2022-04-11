@@ -1,4 +1,3 @@
-// const openAsDataFn = async (content, type, charset, active, isNewTab, filename) => {
 const openAsDataFn = async (
     content,
     {type, charset},
@@ -16,23 +15,22 @@ const openAsDataFn = async (
         isCompleted = false,
         isMemoryCleared = false,
         currentTab = null,
-        onRemovedListener = null,
-        onReplacedListener = null,
-        onUpdatedListener = null;
-    const
-        url = window.URL.createObjectURL(new Blob([content], options)),
-        clearMemory = () => {
-            if (!isMemoryCleared) {
-                isMemoryCleared = true;
-                browser.tabs.onRemoved.removeListener(onRemovedListener);
-                browser.tabs.onReplaced.removeListener(onReplacedListener);
-                browser.tabs.onUpdated.removeListener(onUpdatedListener);
-                window.URL.revokeObjectURL(url);
-            }
-        };
+        onRemovedListener,
+        onReplacedListener,
+        onUpdatedListener,
+        url;
+    const clearMemory = () => {
+        if (!isMemoryCleared) {
+            isMemoryCleared = true;
+            browser.tabs.onRemoved.removeListener(onRemovedListener);
+            browser.tabs.onReplaced.removeListener(onReplacedListener);
+            browser.tabs.onUpdated.removeListener(onUpdatedListener);
+            window.URL.revokeObjectURL(url);
+        }
+    };
 
     // clear memory on a tab is closed event
-    onRemovedListener = (tabId, removeInfo) => {
+    onRemovedListener = tabId => {
         const isRunAndCurrent = currentTab != null && currentTab.id === tabId;
 
         if (isRunAndCurrent) {
@@ -54,10 +52,12 @@ const openAsDataFn = async (
         const isRunAndCurrent = currentTab != null && currentTab.id === tabId;
 
         if (isRunAndCurrent) {
+            const {url: tabUrl} = tab;
+
             // checks if an original tab content was replaced
-            if (!isCompleted && tab.status === 'complete' && url === tab.url) {
+            if (!isCompleted && tab.status === 'complete' && url === tabUrl) {
                 isCompleted = true;
-            } else if (url !== tab.url) {
+            } else if (url !== tabUrl) {
                 clearMemory();
             }
         }
@@ -72,6 +72,7 @@ const openAsDataFn = async (
     if (clearMemoryOnUpdated) {
         browser.tabs.onUpdated.addListener(onUpdatedListener);
     }
+    url = window.URL.createObjectURL(new Blob([content], options));
 
     try {
         if (isNewTab) {
