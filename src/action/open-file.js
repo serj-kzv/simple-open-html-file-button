@@ -54,7 +54,7 @@ document.getElementById('open-in-new-tab')
         const clearMemoryOnReplaced = Boolean(config[CONSTANTS.clearMemoryOnReplaced]);
         const clearMemoryOnUpdated = Boolean(config[CONSTANTS.clearMemoryOnUpdated]);
         const openHtmlFn = detectEncodingEnabled ? openHtmlWithEncodingDetectionFn : openHtmlWithoutEncodingDetectionFn;
-        const openHtmlPromises = Array.from(files).map(file => openHtmlFn(
+        const openHtmlPromises = Array.from(files).map(async file => openHtmlFn(
             file,
             config,
             clearMemoryOnRemoved,
@@ -62,13 +62,11 @@ document.getElementById('open-in-new-tab')
             clearMemoryOnUpdated
         ));
 
-        // console.log(openHtmlPromises);
-
-        // if (config[CONSTANTS.sequentialOpening]) {
-        //     for (const openHtmlPromise of openHtmlPromises) {
-        //         await openHtmlPromise;
-        //     }
-        // } else {
-        //     Promise.allSettled(openHtmlPromises);
-        // }
+        if (config[CONSTANTS.sequentialOpening]) {
+            for (const openHtmlPromise of openHtmlPromises) {
+                await openHtmlPromise;
+            }
+        } else {
+            Promise.allSettled(openHtmlPromises);
+        }
     });
