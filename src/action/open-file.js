@@ -1,66 +1,23 @@
-import getOrDefaultFn from "../ext-lib/getOrDefaultFn.js";
-import openAsHtmlFn from "../util/openAsHtmlFn.js";
-import readFileAsBinaryStringFn from "../util/readFileAsBinaryStringFn.js";
-import readFileAsTxtFn from "../util/readFileAsTxtFn.js";
 import CONSTANTS from "../common/CONSTANTS.js";
+import getOrDefaultFn from "../ext-lib/getOrDefaultFn.js";
+import fileToTxtWithEncodingDetectionFn from '../util/fileToTxtWithEncodingDetectionFn.js';
+import openAsHtmlFn from "../util/openAsHtmlFn.js";
+import readFileAsTxtFn from "../util/readFileAsTxtFn.js";
 
-const openHtmlWithoutEncodingDetectionFn = async (
-    file,
-    config,
-    clearMemoryOnRemoved,
-    clearMemoryOnReplaced,
-    clearMemoryOnUpdated) => {
-    return await openAsHtmlFn(
-        await readFileAsTxtFn(file),
-        'UTF-8',
-        false,
-        true,
-        clearMemoryOnRemoved,
-        clearMemoryOnReplaced,
-        clearMemoryOnUpdated
-    );
-};
-const openHtmlWithEncodingDetectionFn = async (
-    file,
-    config,
-    clearMemoryOnRemoved,
-    clearMemoryOnReplaced,
-    clearMemoryOnUpdated) => {
-    const quantityOfBytesToDetectEncoding = config[CONSTANTS.quantityOfBytesToDetectEncoding];
-    let content = quantityOfBytesToDetectEncoding < file.size ? file.slice(0, quantityOfBytesToDetectEncoding + 1) : file;
-
-    content = await readFileAsBinaryStringFn(content);
-
-    const encoding = jschardet.detect(content).encoding;
-
-    content = await readFileAsTxtFn(file, encoding);
-
-    return openAsHtmlFn(
-        content,
-        'UTF-8',
-        false,
-        true,
-        clearMemoryOnRemoved,
-        clearMemoryOnReplaced,
-        clearMemoryOnUpdated
-    );
-};
-
-document.getElementById('open-in-new-tab')
-    .addEventListener('change', async ({target: {files}}) => {
+document.getElementById(CONSTANTS.openInNewTab).addEventListener('change', async ({target: {files}}) => {
         const config = await getOrDefaultFn();
-        const detectEncodingEnabled = Boolean(config[CONSTANTS.detectEncodingEnabled]);
-        const clearMemoryOnRemoved = Boolean(config[CONSTANTS.clearMemoryOnRemoved]);
-        const clearMemoryOnReplaced = Boolean(config[CONSTANTS.clearMemoryOnReplaced]);
-        const clearMemoryOnUpdated = Boolean(config[CONSTANTS.clearMemoryOnUpdated]);
-        const openHtmlFn = detectEncodingEnabled ? openHtmlWithEncodingDetectionFn : openHtmlWithoutEncodingDetectionFn;
-        const openHtmlPromises = Array.from(files).map(async file => openHtmlFn(
-            file,
-            config,
-            clearMemoryOnRemoved,
-            clearMemoryOnReplaced,
-            clearMemoryOnUpdated
+        const readHtmlAsTxtFn = Boolean(config[CONSTANTS.detectEncodingEnabled]) ? fileToTxtWithEncodingDetectionFn : readFileAsTxtFn;
+        const openHtmlPromises = Array.from(files).map(async file => await openAsHtmlFn(
+            await readHtmlAsTxtFn(file, config[CONSTANTS.quantityOfBytesToDetectEncoding]),
+            'UTF-8',
+            false,
+            true,
+            Boolean(config[CONSTANTS.clearMemoryOnRemoved]),
+            Boolean(config[CONSTANTS.clearMemoryOnReplaced]),
+            Boolean(config[CONSTANTS.clearMemoryOnUpdated])
         ));
+
+        console.log(openHtmlPromises);
 
         // if (config[CONSTANTS.sequentialOpening]) {
         //     for (const openHtmlPromise of openHtmlPromises) {

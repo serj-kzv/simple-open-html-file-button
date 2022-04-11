@@ -6,7 +6,8 @@ const CONSTANTS = Object.freeze({
     clearMemoryOnRemoved : 'clearMemoryOnRemoved',
     clearMemoryOnReplaced: 'clearMemoryOnReplaced',
     clearMemoryOnUpdated: 'clearMemoryOnUpdated',
-    sequentialOpening: 'sequentialOpening'
+    sequentialOpening: 'sequentialOpening',
+    openInNewTab: 'openInNewTab'
 });
 
 export default CONSTANTS;
