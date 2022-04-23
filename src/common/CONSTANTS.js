@@ -1,6 +1,7 @@
 const CONSTANTS = Object.freeze({
     quantityOfBytesToDetectEncoding: 'quantityOfBytesToDetectEncoding',
     detectEncodingEnabled: 'detectEncodingEnabled',
+    useDistributionToDetectEncoding: 'useDistributionToDetectEncoding',
     changelog: 'changelog',
     config: 'config',
     clearMemoryOnRemoved : 'clearMemoryOnRemoved',

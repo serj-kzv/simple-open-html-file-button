@@ -7,17 +7,17 @@ const openAsHtmlFn = (
     isNewTab = true,
     clearMemoryOnRemoved = true,
     clearMemoryOnReplaced = true,
-    clearMemoryOnUpdated = true) => {
-    return openAsDataFn(
-        content,
-        {type: 'text/html', charset},
-        {
-            active,
-            isNewTab,
-            clearMemoryOnRemoved,
-            clearMemoryOnReplaced,
-            clearMemoryOnUpdated
-        });
-};
+    clearMemoryOnUpdated = true
+) => openAsDataFn(
+    content,
+    {type: 'text/html', charset},
+    {
+        active,
+        isNewTab,
+        clearMemoryOnRemoved,
+        clearMemoryOnReplaced,
+        clearMemoryOnUpdated
+    }
+);
 
 export default openAsHtmlFn;
